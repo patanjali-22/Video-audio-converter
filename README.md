@@ -219,36 +219,6 @@ Ensure you have created two queues in RabbitMQ named `mp3` and `video`. To creat
   kubectl apply -f .
   ```
 
-### Application Validation
-
-After deploying the microservices, verify the status of all components by running:
-
-```
-kubectl get all
-```
-
-### Notification Configuration
-
-
-
-For configuring email notifications and two-factor authentication (2FA), follow these steps:
-
-1. Go to your Gmail account and click on your profile.
-
-2. Click on "Manage Your Google Account."
-
-3. Navigate to the "Security" tab on the left side panel.
-
-4. Enable "2-Step Verification."
-
-5. Search for the application-specific passwords. You will find it in the settings.
-
-6. Click on "Other" and provide your name.
-
-7. Click on "Generate" and copy the generated password.
-
-8. Paste this generated password in `notification-service/manifest/secret.yaml` along with your email.
-
 Run the application through the following API calls:
 
 # API Definition
@@ -281,11 +251,3 @@ Run the application through the following API calls:
   ```console
    curl --output video.mp3 -X GET -H 'Authorization: Bearer <JWT Token>' "http://nodeIP:30002/download?fid=<Generated fid>"
   ``` 
-
-## Destroying the Infrastructure
-
-To clean up the infrastructure, follow these steps:
-
-1. **Delete the Node Group:** Delete the node group associated with your EKS cluster.
-
-2. **Delete the EKS Cluster:** Once the nodes are deleted, you can proceed to delete the EKS cluster itself.
