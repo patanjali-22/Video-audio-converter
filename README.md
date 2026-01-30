@@ -3,9 +3,26 @@ Converting mp4 videos to mp3 in a microservices architecture.
 
 ## Architecture
 
-<p align="center">
-  <img src="./Project documentation/ProjectArchitecture.png" width="600" title="Architecture" alt="Architecture">
-  </p>
+```mermaid
+graph TD
+    User[Clients] -->|HTTP Requests| Gateway[Device/Gateway Service]
+    
+    subgraph "Kubernetes Cluster"
+        Gateway -->|Login Auth| Auth[Auth Service]
+        Gateway -->|Upload Video| Converter[Converter Service]
+        Gateway -->|Download MP3| Converter
+        
+        Auth -->|Read/Write| Postgres[(PostgreSQL)]
+        
+        Converter -->|Store Video/MP3| MongoDB[(MongoDB GridFS)]
+        Converter -->|Queue: music/video| RabbitMQ[RabbitMQ]
+        
+        RabbitMQ -->|Consume Message| Converter
+        RabbitMQ -->|Consume Message| Notification[Notification Service]
+        
+        Notification -->|Send Email| EmailServer[SMTP Server]
+    end
+```
 
 ## Deploying a Python-based Microservice Application on AWS EKS
 
