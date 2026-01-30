@@ -34,18 +34,13 @@ This document provides a step-by-step guide for deploying a Python-based microse
 
 Before you begin, ensure that the following prerequisites are met:
 
-1. **Create an AWS Account:** If you do not have an AWS account, create one by following the steps [here](https://docs.aws.amazon.com/streams/latest/dev/setting-up.html).
-
-2. **Install Helm:** Helm is a Kubernetes package manager. Install Helm by following the instructions provided [here](https://helm.sh/docs/intro/install/).
-
-3. **Python:** Ensure that Python is installed on your system. You can download it from the [official Python website](https://www.python.org/downloads/).
-
-4. **AWS CLI:** Install the AWS Command Line Interface (CLI) following the official [installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
-
-5. **Install kubectl:** Install the latest stable version of `kubectl` on your system. You can find installation instructions [here](https://kubernetes.io/docs/tasks/tools/).
-
-6. **Databases:** Set up PostgreSQL and MongoDB for your application.
-
+1. **Create an AWS Account:**
+2. **Install Helm:**
+3. **Python:**
+4. **AWS CLI:** 
+5. **Install kubectl:** 
+6. **Databases:**
+   
 ### High Level Flow of Application Deployment
 
 Follow these steps to deploy your microservice application:
@@ -75,44 +70,18 @@ Follow these steps to deploy your microservice application:
 #### Cluster Creation
 
 1. **Log in to AWS Console:**
-   - Access the AWS Management Console with your AWS account credentials.
-
+  
 2. **Create eksCluster IAM Role**
-   - Follow the steps mentioned in [this](https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html) documentation using root user
-   - After creating it will look like this:
-
-   <p align="center">
-  <img src="./Project documentation/ekscluster_role.png" width="600" title="ekscluster_role" alt="ekscluster_role">
-  </p>
-
-   - Please attach `AmazonEKS_CNI_Policy` explicitly if it is not attached by default
 
 3. **Create Node Role - AmazonEKSNodeRole**
-   - Follow the steps mentioned in [this](https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html#create-worker-node-role) documentation using root user
-   - Please note that you do NOT need to configure any VPC CNI policy mentioned after step 5.e under Creating the Amazon EKS node IAM role
-   - Simply attach the following policies to your role once you have created `AmazonEKS_CNI_Policy` , `AmazonEBSCSIDriverPolicy` , `AmazonEC2ContainerRegistryReadOnly`
-     incase it is not attached by default
-   - Your AmazonEKSNodeRole will look like this: 
-
-<p align="center">
-  <img src="./Project documentation/node_iam.png" width="600" title="Node_IAM" alt="Node_IAM">
-  </p>
 
 4. **Open EKS Dashboard:**
-   - Navigate to the Amazon EKS service from the AWS Console dashboard.
 
 5. **Create EKS Cluster:**
-   - Click "Create cluster."
-   - Choose a name for your cluster.
-   - Configure networking settings (VPC, subnets).
-   - Choose the `eksCluster` IAM role that was created above
-   - Review and create the cluster.
 
 6. **Cluster Creation:**
-   - Wait for the cluster to provision, which may take several minutes.
 
 7. **Cluster Ready:**
-   - Once the cluster status shows as "Active," you can now create node groups.
 
 #### Node Group Creation
 
@@ -126,16 +95,10 @@ Follow these steps to deploy your microservice application:
 
 **NOTE:** Ensure that all the necessary ports are open in the node security group.
 
-<p align="center">
-  <img src="./Project documentation/inbound_rules_sg.png" width="600" title="Inbound_rules_sg" alt="Inbound_rules_sg">
-  </p>
 
 #### Enable EBS CSI Addon
 1. enable addon `ebs csi` this is for enabling pvcs once cluster is created
 
-<p align="center">
-  <img src="./Project documentation/ebs_addon.png" width="600" title="ebs_addon" alt="ebs_addon">
-  </p>
 
 #### Deploying your application on EKS Cluster
 
